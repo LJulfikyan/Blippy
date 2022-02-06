@@ -65,7 +65,7 @@ class _BlippyLoginPageState extends State<BlippyLoginPage> {
                 child: Container(
                   color: Colors.transparent,
                   child: GradientText(
-                    'SIGN UP',
+                    'SIGN UPpppppppp',
                     style: const TextStyle(
                       fontSize: 16,
                       fontFamily: 'Roboto',
