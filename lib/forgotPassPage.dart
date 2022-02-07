@@ -221,7 +221,7 @@ information below. ''',
                       height: 48,
                       alignment: Alignment.center,
                       child: const Text(
-                        'Continue',
+                        'Continu',
                       ),
                     ),
                   ),
