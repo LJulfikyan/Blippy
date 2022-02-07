@@ -1,7 +1,7 @@
+import 'package:blippy_login/forgotPassPage.dart';
 import 'package:flutter/material.dart';
-
 import 'package:simple_gradient_text/simple_gradient_text.dart';
-
+export 'package:blippy_login/forgotPassPage.dart';
 void main() {
   runApp(const BlippyLogin());
 }
@@ -12,7 +12,7 @@ class BlippyLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: BlippyLoginPage(title: 'SIGN IN'),
+      home: BlippyLoginPage(title: 'LOGIN'),
     );
   }
 }
@@ -26,8 +26,23 @@ class BlippyLoginPage extends StatefulWidget {
 
 class _BlippyLoginPageState extends State<BlippyLoginPage> {
   bool _value = false;
-  bool _isObscure = true;
+  bool isObscure = true;
 
+  // bool isButtonActive = true;
+  // late TextEditingController controller;
+  // @override
+  // void initState(){
+  //   super.initState();
+  //   controller = TextEditingController();
+  //   controller.addListener(() {final isButtonActive = controller.text.isNotEmpty;});
+  //   setState(() => this.isButtonActive= isButtonActive);
+  // }
+  //
+  // @override
+  // void dispose(){
+  //   controller.dispose();
+  //   super.dispose();
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,167 +61,172 @@ class _BlippyLoginPageState extends State<BlippyLoginPage> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Row(
-            children: <Widget>[
-              const Text(
-                'Don’t have an account? ',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: 'Roboto',
-                  height: 1.8,
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  print('SIGN UP PAGE');
-                },
-                child: Container(
-                  color: Colors.transparent,
-                  child: GradientText(
-                    'SIGN UPpppppppp',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontFamily: 'Roboto',
-                      height: 1.8,
-                    ),
-                    colors: const <Color>[
-                      Color(0xFF92DA7F),
-                      Color(0xFF40BCA1),
-                    ],
+      body: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          children: [
+            Row(
+              children: <Widget>[
+                const Text(
+                  'Don’t have an account? ',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'Roboto',
+                    height: 1.8,
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 36,
-          ),
-          const SizedBox(
-            width: 328,
-            height: 48,
-            child: TextField(
+                GestureDetector(
+                  onTap: () {
+                    print('SIGN UP PAGE');
+                  },
+                  child: Container(
+                    color: Colors.transparent,
+                    child: GradientText(
+                      'SIGN UP',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'Roboto',
+                        height: 1.8,
+                      ),
+                      colors: const <Color>[
+                        Color(0xFF92DA7F),
+                        Color(0xFF40BCA1),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 36,
+            ),
+            const TextField(
+              keyboardType: TextInputType.phone,
+                cursorWidth: 3,
+                cursorHeight: 20,
+                cursorColor: Color(0xFF92DA7F),
                 obscureText: false,
                 decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.green, width: 1.5),
                   ),
                   border: OutlineInputBorder(),
-                  labelText: 'Phone number',
+                  hintText: 'Phone number',
                 )),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          SizedBox(
-            width: 328,
-            height: 48,
-            child: TextField(
-              obscureText: _isObscure,
+            const SizedBox(
+              height: 16,
+            ),
+            TextField(
+              obscureText: isObscure,
+              cursorWidth: 3,
+              cursorHeight: 20,
+              cursorColor: const Color(0xFF92DA7F),
               decoration: InputDecoration(
                 focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.green, width: 1.5),
                 ),
                 border: const OutlineInputBorder(),
-                labelText: 'Password',
+                hintText: 'Password',
                 suffixIcon: IconButton(
                   color: const Color(0xFF92DA7F),
-                  icon: Icon(
-                    _isObscure ? Icons.visibility : Icons.visibility_off,
-                  ),
+                  icon: Icon(isObscure
+                      ?  Icons.visibility
+                      : Icons.visibility_off),
                   onPressed: () {
                     setState(() {
-                      _isObscure = !_isObscure;
+                      isObscure = !isObscure;
                     });
                   },
                 ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Column(
-            children: [
-              Row(
-                children: <Widget>[
-                  const SizedBox(
-                    width: 30,
-                  ),
-                  Checkbox(
-                    value: _value,
-                    onChanged: (value) {
-                      setState(() {
-                        _value = value!;
-                      });
-                    },
-                    activeColor: const Color(0xFF92DA7F),
-                  ),
-                  const Text(
-                    'Remember me',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: 'Roboto',
-                      height: 1.8,
+            const SizedBox(
+              height: 5,
+            ),
+            Column(
+              children: [
+                Row(
+                  children: <Widget>[
+                    // const SizedBox(
+                    //   width: 3,
+                    // ),
+                    Checkbox(
+                      value: _value,
+                      onChanged: (value) {
+                        setState(() {
+                          _value = value!;
+                        });
+                      },
+                      activeColor: const Color(0xFF92DA7F),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 46),
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20))),
-                child: Ink(
-                  decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: <Color>[
-                          Color(0xFF92DA7F),
-                          Color(0xFF40BCA1),
-                        ],
+                    const Text(
+                      'Remember me',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'Roboto',
+                        height: 1.8,
                       ),
-                      borderRadius: BorderRadius.circular(8)),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 46),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10))),
+                  child: Ink(
+                    decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: <Color>[
+                            Color(0xFF92DA7F),
+                            Color(0xFF40BCA1),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Container(
+                      height: 48,
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'LOGIN',
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ForgotPassPage()),
+                    );
+                  },
+
                   child: Container(
-                    width: 328,
-                    height: 48,
-                    alignment: Alignment.center,
-                    child: const Text(
-                      'LOGIN',
+                    color: Colors.transparent,
+                    child: GradientText(
+                      'Forgot Your Password?',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'Roboto',
+                        height: 1.8,
+                      ),
+                      colors: const <Color>[
+                        Color(0xFF92DA7F),
+                        Color(0xFF40BCA1),
+                      ],
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              GestureDetector(
-                onTap: () {
-                  print('PASSWORD RECOVERY PAGE');
-                },
-                child: Container(
-                  color: Colors.transparent,
-                  child: GradientText(
-                    'Forgot Your Password?',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontFamily: 'Roboto',
-                      height: 1.8,
-                    ),
-                    colors: const <Color>[
-                      Color(0xFF92DA7F),
-                      Color(0xFF40BCA1),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
