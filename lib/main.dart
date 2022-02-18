@@ -19,7 +19,7 @@ class BlippyLogin extends StatelessWidget {
 
 class BlippyLoginPage extends StatefulWidget {
   const BlippyLoginPage({Key? key, required String title}) : super(key: key);
-
+final b = 6;
   @override
   State<BlippyLoginPage> createState() => _BlippyLoginPageState();
 }
@@ -27,22 +27,8 @@ class BlippyLoginPage extends StatefulWidget {
 class _BlippyLoginPageState extends State<BlippyLoginPage> {
   bool _value = false;
   bool isObscure = true;
+final a = 7;
 
-  // bool isButtonActive = true;
-  // late TextEditingController controller;
-  // @override
-  // void initState(){
-  //   super.initState();
-  //   controller = TextEditingController();
-  //   controller.addListener(() {final isButtonActive = controller.text.isNotEmpty;});
-  //   setState(() => this.isButtonActive= isButtonActive);
-  // }
-  //
-  // @override
-  // void dispose(){
-  //   controller.dispose();
-  //   super.dispose();
-  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

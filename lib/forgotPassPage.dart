@@ -1,4 +1,8 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'confirmPassChange.dart';
 
 class ForgotPassPage extends StatefulWidget {
   const ForgotPassPage({Key? key}) : super(key: key);
@@ -9,14 +13,72 @@ class ForgotPassPage extends StatefulWidget {
 
 class _ForgotPassPageState extends State<ForgotPassPage> {
   bool isObscure = true;
-  final bool _passMatch = false;
-  final bool _atLeastEight = false;
-  final bool _containNums = false;
+  bool isValidPhone = false;
+  bool passMatch = false;
+  bool atLeastEight = false;
+  bool containNums = false;
+  bool isButtonActive = false;
+
+  late String text1 = "";
+  late String text2 = "";
+  late ElevatedButton continueButton;
+
+  void checkLength(String text) {
+    if (text.length >= 8) {
+      setState(() {
+        atLeastEight = true;
+      });
+    } else {
+      setState(() {
+        atLeastEight = false;
+      });
+    }
+  }
+
+  void isContainNumber(String text) {
+    if (text.contains(RegExp(r'[0-9]'))) {
+      setState(() {
+        containNums = true;
+      });
+    } else {
+      setState(() {
+        containNums = false;
+      });
+    }
+  }
+
+  void passwordMatch(String text1, String text2) {
+    if (text1 == text2 &&
+        text1.isNotEmpty &&
+        text2.isNotEmpty &&
+        atLeastEight &&
+        containNums) {
+      setState(() {
+        passMatch = true;
+      });
+    } else {
+      setState(() {
+        passMatch = false;
+      });
+    }
+  }
+
+  void correctForm() {
+    if (containNums && atLeastEight && passMatch) {
+      setState(() {
+        isButtonActive = true;
+      });
+    } else {
+      setState(() {
+        isButtonActive = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Row(
           children: const [Text("Forgot Password"), Spacer(), Text('1/2')],
@@ -49,6 +111,7 @@ information below. ''',
                     fontSize: 16,
                     fontFamily: 'Roboto',
                     height: 1.8,
+                    color: Colors.black,
                   ),
                 ),
               ],
@@ -56,13 +119,19 @@ information below. ''',
             const SizedBox(
               height: 10,
             ),
-           const TextField(
+            TextField(
+                onChanged: (phoneNum) {
+                  print(phoneNum);
+                },
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[+0-9]'))
+                ],
                 keyboardType: TextInputType.phone,
                 cursorWidth: 3,
                 cursorHeight: 20,
-                cursorColor: Color(0xFF92DA7F),
+                cursorColor: const Color(0xFF92DA7F),
                 obscureText: false,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.green, width: 1.5),
                   ),
@@ -73,6 +142,16 @@ information below. ''',
               height: 15,
             ),
             TextField(
+              inputFormatters: [
+                FilteringTextInputFormatter.deny(RegExp('[ ]'))
+              ],
+              onChanged: (text) {
+                text1 = text;
+                checkLength(text1);
+                isContainNumber(text1);
+                passwordMatch(text1, text2);
+                correctForm();
+              },
               obscureText: isObscure,
               cursorWidth: 3,
               cursorHeight: 20,
@@ -99,6 +178,14 @@ information below. ''',
               height: 15,
             ),
             TextField(
+              inputFormatters: [
+                FilteringTextInputFormatter.deny(RegExp('[ ]'))
+              ],
+              onChanged: (text) {
+                text2 = text;
+                passwordMatch(text1, text2);
+                correctForm();
+              },
               obscureText: isObscure,
               cursorWidth: 3,
               cursorHeight: 20,
@@ -130,7 +217,7 @@ information below. ''',
                   Container(
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: _atLeastEight ? Colors.green : Colors.grey),
+                        color: atLeastEight ? Colors.green : Colors.grey),
                     child: const Padding(
                       padding: EdgeInsets.all(6.0),
                     ),
@@ -153,7 +240,7 @@ information below. ''',
                     Container(
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: _containNums ? Colors.green : Colors.grey),
+                          color: containNums ? Colors.green : Colors.grey),
                       child: const Padding(
                         padding: EdgeInsets.all(6.0),
                       ),
@@ -163,7 +250,6 @@ information below. ''',
                     ),
                     const Text(
                       'Must contain numbers (0-9)',
-
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 16,
@@ -178,7 +264,7 @@ information below. ''',
                     Container(
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: _passMatch ? Colors.green : Colors.grey),
+                          color: passMatch ? Colors.green : Colors.grey),
                       child: const Padding(
                         padding: EdgeInsets.all(6.0),
                       ),
@@ -200,28 +286,44 @@ information below. ''',
                 const SizedBox(
                   height: 50,
                 ),
-                ElevatedButton(
-                  onPressed: () {},
+                continueButton = ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      isButtonActive
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ConfirmPassChange()),
+                            )
+                          : null;
+                    });
+                  },
                   style: ElevatedButton.styleFrom(
+                      primary: Colors.transparent,
                       padding: EdgeInsets.zero,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10))),
                   child: Ink(
                     decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: <Color>[
-                            Color(0xFF92DA7F),
-                            Color(0xFF40BCA1),
-                          ],
-                        ),
+                        gradient: LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: isButtonActive
+                                ? <Color>[
+                                    const Color(0xFF92DA7F),
+                                    const Color(0xFF40BCA1),
+                                  ]
+                                : <Color>[
+                                    const Color(0xFF92DA7F).withOpacity(0.5),
+                                    const Color(0xFF40BCA1).withOpacity(0.5)
+                                  ]),
                         borderRadius: BorderRadius.circular(8)),
                     child: Container(
                       height: 48,
                       alignment: Alignment.center,
                       child: const Text(
-                        'Continue',
+                        'CONTINUE',
                       ),
                     ),
                   ),
