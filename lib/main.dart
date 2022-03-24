@@ -1,9 +1,14 @@
+import 'package:blippy_login/Base/app_config.dart';
 import 'package:blippy_login/forgotPassPage.dart';
+import 'package:blippy_login/profile.dart';
+import 'package:blippy_login/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 export 'package:blippy_login/forgotPassPage.dart';
-void main() {
-  runApp(const BlippyLogin());
+
+void main()  {  runApp( MaterialApp(
+  home: SplashScreen(),
+  ));
 }
 
 class BlippyLogin extends StatelessWidget {
@@ -17,11 +22,9 @@ class BlippyLogin extends StatelessWidget {
   }
 }
 
-
-
 class BlippyLoginPage extends StatefulWidget {
   const BlippyLoginPage({Key? key, required String title}) : super(key: key);
-final b = 6;
+
   @override
   State<BlippyLoginPage> createState() => _BlippyLoginPageState();
 }
@@ -29,7 +32,17 @@ final b = 6;
 class _BlippyLoginPageState extends State<BlippyLoginPage> {
   bool _value = false;
   bool isObscure = true;
-final a = 7;
+
+  String? get countryCallingCode =>
+      AppConfig.countryCodeData?.countryCallingCode;
+
+  String? initialTextValue() {
+    if (countryCallingCode != null) {
+      return countryCallingCode!;
+    } else {
+      return "";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,19 +101,21 @@ final a = 7;
             const SizedBox(
               height: 36,
             ),
-            const TextField(
+            TextFormField(
+              initialValue: initialTextValue(),
               keyboardType: TextInputType.phone,
-                cursorWidth: 3,
-                cursorHeight: 20,
-                cursorColor: Color(0xFF92DA7F),
-                obscureText: false,
-                decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.green, width: 1.5),
-                  ),
-                  border: OutlineInputBorder(),
-                  hintText: 'Phone number',
-                )),
+              cursorWidth: 3,
+              cursorHeight: 20,
+              cursorColor: const Color(0xFF92DA7F),
+              obscureText: false,
+              decoration: const InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.green, width: 1.5),
+                ),
+                border: OutlineInputBorder(),
+                hintText: 'Phone number',
+              ),
+            ),
             const SizedBox(
               height: 16,
             ),
@@ -117,9 +132,8 @@ final a = 7;
                 hintText: 'Password',
                 suffixIcon: IconButton(
                   color: const Color(0xFF92DA7F),
-                  icon: Icon(isObscure
-                      ?  Icons.visibility
-                      : Icons.visibility_off),
+                  icon:
+                      Icon(isObscure ? Icons.visibility : Icons.visibility_off),
                   onPressed: () {
                     setState(() {
                       isObscure = !isObscure;
@@ -159,7 +173,12 @@ final a = 7;
                 ),
                 const SizedBox(height: 46),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ProfilePage()));
+                  },
                   style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,
                       shape: RoundedRectangleBorder(
@@ -191,10 +210,10 @@ final a = 7;
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const ForgotPassPage()),
+                      MaterialPageRoute(
+                          builder: (context) => const ForgotPassPage()),
                     );
                   },
-
                   child: Container(
                     color: Colors.transparent,
                     child: GradientText(

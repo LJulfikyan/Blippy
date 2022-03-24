@@ -1,7 +1,5 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'confirmPassChange.dart';
 
 class ForgotPassPage extends StatefulWidget {
@@ -18,7 +16,6 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
   bool atLeastEight = false;
   bool containNums = false;
   bool isButtonActive = false;
-
   late String text1 = "";
   late String text2 = "";
   late ElevatedButton continueButton;

@@ -1,23 +1,42 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ConfirmPassChange extends StatefulWidget {
+class ConfirmPassChange extends StatelessWidget {
   const ConfirmPassChange({Key? key}) : super(key: key);
 
   @override
-  _ConfirmPassChangeState createState() => _ConfirmPassChangeState();
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: ConfirmPassChangePage(title: 'LOGIN'),
+    );
+  }
 }
 
-class _ConfirmPassChangeState extends State<ConfirmPassChange> {
+class ConfirmPassChangePage extends StatefulWidget {
+  const ConfirmPassChangePage({Key? key, required String title})
+      : super(key: key);
+
+  @override
+  State<ConfirmPassChangePage> createState() => _ConfirmPassChangePageState();
+}
+
+class _ConfirmPassChangePageState extends State<ConfirmPassChangePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: Row(
-          children: const [Text("Forgot Password"), Spacer(), Text('2/2')],
+        appBar: AppBar(
+      title: const Text('LOGIN'),
+      flexibleSpace: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: <Color>[
+              Color(0xFF92DA7F),
+              Color(0xFF40BCA1),
+            ],
+          ),
         ),
       ),
-    );
+    ));
   }
 }
